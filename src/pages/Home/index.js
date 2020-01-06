@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "../../services/service.api";
-import { Keyboard } from "react-native";
+import { Keyboard, ActivityIndicator } from "react-native";
 
 import {
   Container,
@@ -14,12 +14,15 @@ import {
 
 export default class Home extends Component {
   state = {
-    user: ""
+    user: "",
+    loading: false
   };
 
   handleFavoriteUser = async () => {
     const { navigation } = this.props;
     const { user } = this.state;
+
+    this.setState({ loading: true });
 
     try {
       const res = await axios.get(`/users/${user}`);
@@ -31,6 +34,8 @@ export default class Home extends Component {
         bio: res.data.bio
       };
 
+      this.setState({ user: "", loading: false });
+
       navigation.navigate("User", { user: data });
     } catch (err) {
       console.tron.warn("Error", err);
@@ -40,7 +45,7 @@ export default class Home extends Component {
   };
 
   render() {
-    const { user } = this.state;
+    const { user, loading } = this.state;
 
     return (
       <Container behavior="padding" enabled>
@@ -58,7 +63,11 @@ export default class Home extends Component {
             />
           </ViewInput>
           <ButtonProfile onPress={this.handleFavoriteUser}>
-            <ButtonProfileText>Adicionar</ButtonProfileText>
+            {loading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <ButtonProfileText>Adicionar</ButtonProfileText>
+            )}
           </ButtonProfile>
         </Form>
       </Container>
