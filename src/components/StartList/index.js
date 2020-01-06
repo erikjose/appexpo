@@ -9,7 +9,7 @@ export default function StarList({ star, navigation }) {
     <Starred>
       <TouchableOpacity
         style={{ flexDirection: "row" }}
-        onPress={() => navigation.navigate("WebView", { owner: star.owner })}
+        onPress={() => navigation.navigate("WebView", { owner: star.owner })} 
       >
         <OwnerAvatar source={{ uri: star.owner.avatar_url }} />
         <Info>
