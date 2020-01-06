@@ -1,12 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+import Router from "./src/router";
+
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Obeso Infeccionado</Text>
-    </View>
-  );
+  return <Router />;
 }
 
 const styles = StyleSheet.create({
