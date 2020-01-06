@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "../../services/service.api";
+import { Keyboard } from "react-native";
 
 import {
   Container,
@@ -15,17 +17,35 @@ export default class Home extends Component {
     user: ""
   };
 
-  handleFavoriteUser = () => {
-    console.log();
+  handleFavoriteUser = async () => {
+    const { navigation } = this.props;
+    const { user } = this.state;
+
+    try {
+      const res = await axios.get(`/users/${user}`);
+
+      const data = {
+        login: res.data.login,
+        avatar_url: res.data.avatar_url,
+        name: res.data.name,
+        bio: res.data.bio
+      };
+
+      navigation.navigate("User", { user: data });
+    } catch (err) {
+      console.tron.warn("Error", err);
+    } finally {
+      Keyboard.dismiss();
+    }
   };
 
   render() {
     const { user } = this.state;
 
     return (
-      <Container>
+      <Container behavior="padding" enabled>
         <Form>
-          <Title>GitHub Favorites</Title>
+          <Title>GitHub Stars</Title>
           <ViewInput>
             <Input
               value={user}
