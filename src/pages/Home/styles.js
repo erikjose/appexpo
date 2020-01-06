@@ -1,10 +1,10 @@
 import styled from "styled-components/native";
 import { RectButton } from "react-native-gesture-handler";
-import { Dimensions } from "react-native";
+import { Dimensions, KeyboardAvoidingView } from "react-native";
 
 const width = Dimensions.get("window").width;
 
-export const Container = styled.View`
+export const Container = styled.KeyboardAvoidingView`
   padding: 15px;
   background: #eee;
   flex: 1;
